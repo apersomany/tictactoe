@@ -3,41 +3,47 @@ package tictactoe;
 import java.util.ArrayList;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 
-interface OnWin {
-    void onWin(String player);
-}
-
-public class TicTacToe extends GridPane {
+public class TicTacToe extends StackPane {
     ArrayList<ArrayList<Button>> tiles = new ArrayList<>();
     String player = "O";
     int gridSize;
-    OnWin onWin;
 
-    public TicTacToe(int gridSize, int tileSize, OnWin onWin) {
+    public TicTacToe(int gridSize) {
         this.gridSize = gridSize;
-        this.onWin = onWin;
+        GridPane game = new GridPane();
         for (int x = 0; x < gridSize; x++) {
             ArrayList<Button> column = new ArrayList<>();
             for (int y = 0; y < gridSize; y++) {
                 Button tile = new Button();
-                tile.setMinHeight(tileSize);
-                tile.setMinWidth(tileSize);
+                tile.setMinHeight(480 / gridSize);
+                tile.setMinWidth(480 / gridSize);
                 tile.setOnAction((e) -> {
                     if (tile.getText().isEmpty()) {
                         tile.setText(player);
                         if (checkWin()) {
-                            onWin.onWin(player);
+                            Rectangle blur = new Rectangle(480, 480, Color.WHITESMOKE);
+                            blur.setOpacity(0.5);
+                            Label text = new Label(player + " wins!");
+                            text.setFont(new Font(64));
+                            this.getChildren().add(blur);
+                            this.getChildren().add(text);
                         }
                         player = player.equals("O") ? "X" : "O";
                     }
                 });
                 column.add(tile);
-                this.add(tile, x, y);
+                game.add(tile, x, y);
             }
             tiles.add(column);
         }
+        this.getChildren().add(game);
     }
 
     private boolean checkWin() {
