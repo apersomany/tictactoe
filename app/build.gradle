@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
 }
 
 application {

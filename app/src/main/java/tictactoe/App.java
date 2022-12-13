@@ -1,6 +1,7 @@
 package tictactoe;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -9,13 +10,10 @@ public class App extends Application {
         launch(args);
     }
 
-    public Scene scene() {
-        return new Scene(new TicTacToe(5));
-    }
-
     public void start(Stage stage) throws Exception {
-        stage.setTitle("TicTacToe");
-        stage.setScene(scene());
+        stage.setScene(new Scene(FXMLLoader.load(TicTacToe.class.getResource("app.fxml"))));
+        stage.setTitle("Tic Tac Toe");
+        stage.setResizable(false);
         stage.show();
     }
 
